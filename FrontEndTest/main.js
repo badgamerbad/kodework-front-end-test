@@ -6,7 +6,7 @@ import ReactDOM from "react-dom"
 
 let foodData = require('./downloads/FrontEndTest/source.json')
 
-class foo {
+class FoodFilter {
     constructor() {
         this.addCuisines()
         this.addEventListener()
@@ -16,7 +16,27 @@ class foo {
         let cuisines = foodData.data.map((item) => {
             return item.cuisines
         })
-        console.log(cuisines)
+        let final = []
+        for(let i = 0; i< cuisines.length; i++) {
+            final = [...final, ...cuisines[i]]
+        }
+        let key = 0;
+        let option = <option key={key++} value="All">All</option>
+        let options = this.uniqueArrayItem(final).map((item)=>{
+            return <option key={key++} value={item}>{item}</option>
+        })
+        options = [option, options]
+        ReactDOM.render(options, cuisinesSelect)
+    }
+    uniqueArrayItem(array) {
+        let unique = array.concat();
+        for(let i = 0; i<unique.length; i++) {
+            for(let j = i+1; j<unique.length; j++) {
+                if(unique[i] === unique[j])
+                    unique.splice(j--, 1);
+            }   
+        }
+        return unique;
     }
     addEventListener() {
         let filterButton = document.querySelector('#filterButton')
@@ -56,7 +76,7 @@ class foo {
                         <div class="item">
                         <img src="${item.imgUrl}" alt="pizza">
                         <h1>${item.name}</h1>
-                        <p>${selectedCuisine}</p>
+                        <p>${item.cuisines}</p>
                         <ul>
                             <li>${item.avgRating}</li>
                             <li>${item.avgCost}/- FOR 2</li>
@@ -75,4 +95,4 @@ class foo {
     }
 }
 
-new foo()
+new FoodFilter()
