@@ -74,13 +74,18 @@ class FoodFilter {
                 content +=
                     `
                         <div class="item">
-                        <img src="${item.imgUrl}" alt="pizza">
-                        <h1>${item.name}</h1>
-                        <p>${item.cuisines}</p>
-                        <ul>
-                            <li>${item.avgRating}</li>
-                            <li>${item.avgCost}/- FOR 2</li>
-                        </ul>
+                            <img src="${item.imgUrl}" alt="pizza">
+                            <div class="item-details">
+                                <div class="veg-${item.isVeg}"></div>
+                                <div>
+                                    <h1>${item.name}</h1>
+                                    <p>${item.cuisines}</p>
+                                </div>
+                            </div>
+                            <ul>
+                                <li>Ratings: ${item.avgRating}</li>
+                                <li>Rs. ${item.avgCost}/- FOR 2</li>
+                            </ul>
                         </div>
                     `
                 
