@@ -18,4 +18,4 @@ npm run build
 ```
 
 ## Live Demo
-[Go to site](https://badgamerbad.github.io/kodework-front-end-test/FrontEndTest/)
+[Go to site](https://badgamerbad.github.io/kodework-test/FrontEndTest/)
