@@ -1,8 +1,8 @@
-require(`./index.html`);
-require(`./index.css`);
+require(`./index.html`)
+require(`./index.css`)
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React from "react"
+import ReactDOM from "react-dom"
 
 let foodData = require('./downloads/FrontEndTest/source.json')
 
@@ -14,15 +14,11 @@ class foo {
     addCuisines() {
         let cuisinesSelect = document.querySelector('#cuisines')
         let cuisines = foodData.data.map((item) => {
-            return item.cuisines;
+            return item.cuisines
         })
         console.log(cuisines)
     }
-    addFoodOnFilters() {
-
-    }
     addEventListener() {
-
         let filterButton = document.querySelector('#filterButton')
         filterButton.addEventListener('click', (e) => {
             let nameSelected = document.querySelector('#name').value
@@ -31,6 +27,14 @@ class foo {
             let costCuisine = document.querySelector('#cost').value
             let content = ``
             let displayingData = foodData.data.filter((item) => {
+                let hasName = false
+                if(nameSelected.trim() == "") {
+                    hasName = true
+                }
+                else if(item.name.toLowerCase().indexOf(nameSelected.trim().toLowerCase()) > -1){
+                    hasName = true
+                }
+                let hasType = item.isVeg == typeSelected
                 let hasCuisine = false
                 if (selectedCuisine == "All") {
                     hasCuisine = true
@@ -40,8 +44,10 @@ class foo {
                             return true
                     })
                 }
-                // item.avgCost == costCuisine
-                if (hasCuisine && item.isVeg == typeSelected)
+                let hasCost = false
+                hasCost = costCuisine.trim() == "" ? true : item.avgCost <= costCuisine
+
+                if (hasName && hasType && hasCuisine && hasCost)
                     return item
             })
             displayingData.map((item) => {
@@ -59,13 +65,14 @@ class foo {
                     `
                 
             })
-            console.log(content);
-            // const Index = () => {
-            //     return <div>test</div>;
-            // };
-            // ReactDOM.render( <Index /> , document.querySelector('.content'));
+            console.log(content)
+            ReactDOM.render( '', document.querySelector('.content'))
+            ReactDOM.render( <div dangerouslySetInnerHTML={this.createMarkup(content)}></div>, document.querySelector('.content'))
         })
+    }
+    createMarkup(content) {
+        return {__html: content};
     }
 }
 
-new foo();
+new foo()
